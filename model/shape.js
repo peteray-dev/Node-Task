@@ -1,21 +1,24 @@
+const { required } = require('joi')
 const mongoose = require('mongoose')
 
 const shapeSchema = new mongoose.Schema({
-    shape: {
-        type: String,
-        default: "square",
-        unique: false
+    shape:{
+        type: "String"
     },
     dimension: {
-        lenght_a:{
+        length_a:{
             type: Number,
             trim: true,
         },
-        lenght_b:{
+        length_b:{
             type: Number,
             trim: true,
         },
-        lenght_c:{
+        length_c:{
+            type: Number,
+            trim: true,
+        }, 
+        radius:{
             type: Number,
             trim: true,
         }

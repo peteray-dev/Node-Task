@@ -11,7 +11,11 @@ const userSchema = new mongoose.Schema({
         required: [true, "please input a password"],
         min: 6,
         max: 15
-    }
+    },
+    // token:{
+    //     type: String,
+    //     required: true
+    // }
 })
 
 const User = mongoose.model('User', userSchema)

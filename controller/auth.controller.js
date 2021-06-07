@@ -23,12 +23,12 @@ exports.register = async (req, res, next) => {
 
     const user = await User.create(req.body);
 
-    // let token = signToken(user._id)
+    let token = signToken(user._id)
 
     res.status(200).json({
       status: 'success',
       message: user,
-      //   token
+        token
     });
   } catch (error) {
     next(error);
@@ -47,7 +47,7 @@ exports.login = async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       message: user,
-      token,
+      token
     });
   } catch (error) {
     next(error);
@@ -60,7 +60,7 @@ exports.authorization = async (req, res, next) => {
 
     if (
       req.headers.authorization &&
-      req.headers.authorization.startWith('Bearer')
+      req.headers.authorization.startsWith('Bearer')
     ) {
       token = req.headers.authorization.split(' ')[1];
     }
