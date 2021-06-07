@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
     email:{
@@ -18,6 +19,16 @@ const userSchema = new mongoose.Schema({
     // }
 })
 
-const User = mongoose.model('User', userSchema)
+userSchema.pre('save', async function (next) {
+  // Only run this function if password was actually modified
+  if (!this.isModified('password')) return next();
 
-module.exports = User
+  // Hash the password
+  this.password = await bcrypt.hash(this.password, 12);
+
+  next();
+});
+
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;

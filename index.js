@@ -2,21 +2,17 @@ const express = require('express');
 
 const mongoose = require('mongoose');
 const ApiError = require('./utils/apiError');
-const userRoute = require('./routes/user.routes')
-const shapeRoute = require('./routes/shape.routes')
+const userRoute = require('./routes/user.routes');
+const shapeRoute = require('./routes/shape.routes');
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/api/user', userRoute )
+app.use('/api/user', userRoute);
 
-app.use('/api/shape', shapeRoute)
-
-
-
-
+app.use('/api/shape', shapeRoute);
 
 ///handling 404 error
 app.all('*', (req, res, next) => {
@@ -38,7 +34,9 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 4000;
 
 let dbString;
-process.env.NODE_ENV !== 'production' ? (dbString = process.env.MONGO_LOCAL) : (dbString = process.env.MONGO_URI)
+process.env.NODE_ENV !== 'production'
+  ? (dbString = process.env.MONGO_LOCAL)
+  : (dbString = process.env.MONGO_URI);
 
 mongoose
   .connect(dbString, {
