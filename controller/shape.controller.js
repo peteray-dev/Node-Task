@@ -59,3 +59,19 @@ exports.shape = async (req, res, next) => {
     next(error);
   }
 };
+
+
+
+exports.getAllCal = async (req, res, next)=>{
+  try {
+    const shape = await Shape.find()
+    res.status(200).json({
+      status: "success",
+      message: shape,
+      result : shape.length
+    })
+  } catch (error) {
+    next(error)
+    
+  }
+}
