@@ -1,6 +1,7 @@
 const User = require('../model/user');
 const ApiError = require('../utils/apiError');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 require('dotenv').config();
 
@@ -10,25 +11,35 @@ const signToken = (id) => {
   });
 };
 
+const comparePassword = async (inputPassword, userPassword) => {
+  let validPassword = await bcrypt.compare(inputPassword, userPassword);
+  return validPassword;
+};
+
 exports.register = async (req, res, next) => {
   try {
-    const userExist = await User.findOne({ email: req.body.email });
+    const { body } = req;
+    const userExist = await User.findOne({ email: body.email });
     if (userExist) {
       return next(
         new ApiError(
-          `${req.body.email} has already been taken, try a different email`
+          `${body.email} has already been taken, try a different email`
         )
       );
     }
 
-    const user = await User.create(req.body);
+    const user = new User({
+      email: body.email,
+      password: body.password,
+    });
 
-    let token = signToken(user._id)
+    await user.save();
+
+    // let token = signToken(user._id);
 
     res.status(200).json({
       status: 'success',
       message: user,
-        token
     });
   } catch (error) {
     next(error);
@@ -37,17 +48,24 @@ exports.register = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const { body } = req;
+    const user = await User.findOne({ email: body.email });
 
     if (!user) {
       return next(new ApiError('user does not exist'));
+    }
+
+    const validPassword = await comparePassword(body.password, user.password);
+    console.log(validPassword);
+    if (!validPassword) {
+      return next(new ApiError('invalid credentials'));
     }
 
     let token = signToken(user._id);
     res.status(200).json({
       status: 'success',
       message: user,
-      token
+      token,
     });
   } catch (error) {
     next(error);

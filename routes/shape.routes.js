@@ -1,9 +1,9 @@
-const { authorization } = require('../controller/auth.controller')
-const {  shape } = require('../controller/shape.controller')
+const { authorization } = require('../controller/auth.controller');
+const { shape } = require('../controller/shape.controller');
 
-const router = require('express').Router()
+const router = require('express').Router();
 
+router.use(authorization);
+router.post('/shapecal', shape);
 
-router.post('/shapecal', authorization, shape)
-
-module.exports = router
+module.exports = router;
