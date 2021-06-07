@@ -14,5 +14,5 @@ How to set up the project
 
 - test the APIs...
 
-- Currently having a problem with heroku. you can use localhost to test the API's for example "localhost:4000/api/user/register".....read more in the ai documentation.
+- Currently having a problem with heroku. you can use localhost to test the API's for example "localhost:4000/api/user/register".....read more in the api documentation.
 
