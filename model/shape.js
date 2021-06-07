@@ -1,9 +1,9 @@
-const { required } = require('joi')
+// const { required } = require('joi')
 const mongoose = require('mongoose')
 
 const shapeSchema = new mongoose.Schema({
     shape:{
-        type: "String"
+        type: String
     },
     dimension: {
         length_a:{

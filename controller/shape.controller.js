@@ -1,7 +1,7 @@
 const Shape = require('../model/shape');
 const ApiError = require('../utils/apiError');
 
-exports.square = async (req, res, next) => {
+exports.shape = async (req, res, next) => {
   try {
     length_a = req.body.dimension.length_a;
     length_b = req.body.dimension.length_b;
@@ -10,7 +10,7 @@ exports.square = async (req, res, next) => {
 
 
     // let s = (length_a - length_b - length_c)/2
-    const squareResult = (length_a, length_b, length_c, radius) => {
+    const shapeResult = (length_a, length_b, length_c, radius) => {
       if ((req.body.shape === 'square')) {
         const squareAns = length_a * length_a;
         return (
@@ -25,7 +25,7 @@ exports.square = async (req, res, next) => {
       }
       else if(req.body.shape === 'triangle'){
         let s = (length_a+length_b+length_c)/2
-        console.log(Math.sqrt(s) * (s-length_a) * (s-length_b) * (s-length_c))
+        // console.log(Math.sqrt(s) * (s-length_a) * (s-length_b) * (s-length_c))
         const triangleAns = Math.sqrt(s) * (s-length_a) * (s-length_b) * (s-length_c)
         return(
           Math.round((triangleAns + Number.EPSILON)*100)/100
@@ -49,7 +49,7 @@ exports.square = async (req, res, next) => {
 
     };
 
-    req = { ...req.body, result: squareResult(length_a, length_b, length_c, radius) };
+    req = { ...req.body, result: shapeResult(length_a, length_b, length_c, radius) };
     const circleDim = await Shape.create(req);
     res.status(200).json({
       status: 'success',

@@ -1,9 +1,9 @@
 const { authorization } = require('../controller/auth.controller')
-const { square } = require('../controller/shape.controller')
+const {  shape } = require('../controller/shape.controller')
 
 const router = require('express').Router()
 
 
-router.post('/square', authorization, square)
+router.post('/shapecal', authorization, shape)
 
 module.exports = router

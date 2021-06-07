@@ -35,10 +35,13 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
+
+let dbString;
+process.env.NODE_ENV !== 'production' ? (dbString = process.env.MONGO_LOCAL) : (dbString = process.env.MONGO_URI)
 
 mongoose
-  .connect('mongodb://127.0.0.1:27017/task', {
+  .connect(dbString, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
